@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>생존 토의 챌린지</title>
+    <title>생존 시그널</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -29,7 +29,7 @@
             transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
         }
         .accordion-content.open {
-            max-height: 1000px; /* 콘텐츠 길이에 맞춰 충분한 값 설정 */
+            max-height: 2000px; /* QR 확대 시 콘텐츠가 잘리지 않도록 넉넉하게 설정 */
             transition: max-height 1s ease-in-out;
         }
         /* 필터 버튼 스타일 */
@@ -61,8 +61,8 @@
     <!-- 메인 콘텐츠 -->
     <main class="flex-grow container mx-auto px-4 py-8 md:py-16">
         <header class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">생존 토의 챌린지</h1>
-            <p class="text-lg text-gray-600">주어진 상황에서 최선의 선택을 찾기 위한 협력적 토의 프로젝트</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">생존 시그널</h1>
+            <p class="text-xl text-gray-600 font-medium mt-3">토의하라! 그리고 살아남아라!</p>
         </header>
 
         <!-- 필터 버튼 -->
@@ -97,9 +97,40 @@
                         <p class="text-gray-600 mb-6">
                             NASA 교육 자료를 재구성한 토의 활동입니다. 제시된 생존 물품에 대해 개인 활동으로 우선순위를 정하고, 이후 모둠 활동으로 의견을 모으며 합리적인 의사결정 과정을 학습합니다.
                         </p>
-                        <a href="https://moon-survival.pages.dev/" target="_blank" class="inline-block bg-blue-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-600 transition-colors duration-300 transform hover:scale-105">
-                            입장하기
-                        </a>
+                        
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-inner">
+                            <!-- QR 코드 및 확대/축소 버튼 -->
+                            <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px]">
+                                <div class="flex justify-center items-center">
+                                    <img id="qr-moon" src="./moon_qr.png" alt="달에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;" data-width="160">
+                                </div>
+                                <div class="flex space-x-2 mt-4">
+                                    <button onclick="zoomQr('qr-moon', 'in')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                        <i class="fas fa-search-plus mr-1"></i> 확대
+                                    </button>
+                                    <button onclick="zoomQr('qr-moon', 'out')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                        <i class="fas fa-search-minus mr-1"></i> 축소
+                                    </button>
+                                </div>
+                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center"><i class="fas fa-qrcode mr-2 text-blue-500"></i>모바일 접속</span>
+                            </div>
+                            <!-- 접속 버튼 영역 -->
+                            <div class="flex flex-col space-y-4 w-full">
+                                <div class="flex flex-col sm:flex-row gap-3 w-full">
+                                    <a href="https://moon-survival-for-class.pages.dev/" target="_blank" class="flex-grow flex items-center justify-center bg-blue-500 text-white font-bold text-lg py-4 px-8 rounded-xl hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                        <i class="fas fa-rocket mr-3"></i> 수업용 입장하기
+                                    </a>
+                                    <button onclick="copyToClipboard('https://moon-survival-for-class.pages.dev/')" class="flex-shrink-0 flex items-center justify-center bg-white text-blue-500 border border-blue-200 font-bold text-base py-4 px-6 rounded-xl hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-sm" title="링크 복사">
+                                        <i class="far fa-copy mr-2"></i> 링크 복사
+                                    </button>
+                                </div>
+                                <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                    <div class="mb-1"><strong>PC:</strong> 위 버튼을 클릭하여 접속하세요.</div>
+                                    <div><strong>스마트폰/태블릿:</strong> 왼쪽 QR 코드를 스캔하여 접속하세요. (버튼으로 크기 조절 가능)</div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -125,9 +156,40 @@
                         <p class="text-gray-600 mb-6">
                             미 해안경비대 교육 자료를 재구성한 토의 활동입니다. 조난 상황에서 주어진 생존 물품의 우선순위를 개인 활동으로 먼저 정하고, 이후 모둠 활동으로 의견을 모으며 협력적 문제 해결을 경험합니다.
                         </p>
-                        <a href="https://sea-survival.pages.dev/" target="_blank" class="inline-block bg-green-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-green-600 transition-colors duration-300 transform hover:scale-105">
-                            입장하기
-                        </a>
+
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-inner">
+                            <!-- QR 코드 및 확대/축소 버튼 -->
+                            <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px]">
+                                <div class="flex justify-center items-center">
+                                    <img id="qr-sea" src="./sea_qr.png" alt="바다에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;" data-width="160">
+                                </div>
+                                <div class="flex space-x-2 mt-4">
+                                    <button onclick="zoomQr('qr-sea', 'in')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                        <i class="fas fa-search-plus mr-1"></i> 확대
+                                    </button>
+                                    <button onclick="zoomQr('qr-sea', 'out')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                        <i class="fas fa-search-minus mr-1"></i> 축소
+                                    </button>
+                                </div>
+                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center"><i class="fas fa-qrcode mr-2 text-green-500"></i>모바일 접속</span>
+                            </div>
+                            <!-- 접속 버튼 영역 -->
+                            <div class="flex flex-col space-y-4 w-full">
+                                <div class="flex flex-col sm:flex-row gap-3 w-full">
+                                    <a href="https://sea-survival-for-class.pages.dev/" target="_blank" class="flex-grow flex items-center justify-center bg-green-500 text-white font-bold text-lg py-4 px-8 rounded-xl hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                        <i class="fas fa-ship mr-3"></i> 수업용 입장하기
+                                    </a>
+                                    <button onclick="copyToClipboard('https://sea-survival-for-class.pages.dev/')" class="flex-shrink-0 flex items-center justify-center bg-white text-green-500 border border-green-200 font-bold text-base py-4 px-6 rounded-xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-sm" title="링크 복사">
+                                        <i class="far fa-copy mr-2"></i> 링크 복사
+                                    </button>
+                                </div>
+                                <div class="text-sm text-gray-600 bg-green-50 p-3 rounded-lg border border-green-100">
+                                    <div class="mb-1"><strong>PC:</strong> 위 버튼을 클릭하여 접속하세요.</div>
+                                    <div><strong>스마트폰/태블릿:</strong> 왼쪽 QR 코드를 스캔하여 접속하세요. (버튼으로 크기 조절 가능)</div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -146,11 +208,38 @@
     <!-- 푸터 -->
     <footer class="text-center py-6">
         <p class="text-gray-500">
-            Copyright &copy; 2025 핑키네
+            Copyright 2025-2026. 핑키네 All rights reserved.
         </p>
     </footer>
 
     <script>
+        // --- 링크 복사 로직 ---
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('해당 프로젝트의 접속 링크가 복사되었습니다!');
+            }).catch(err => {
+                console.error('링크 복사 실패:', err);
+                alert('링크 복사에 실패했습니다.');
+            });
+        }
+
+        // --- QR 코드 확대/축소 로직 ---
+        function zoomQr(imgId, action) {
+            const img = document.getElementById(imgId);
+            let currentWidth = parseInt(img.dataset.width) || 160;
+            
+            // 확대 (최대 400px), 축소 (최소 120px)
+            if (action === 'in' && currentWidth < 400) {
+                currentWidth += 40;
+            } else if (action === 'out' && currentWidth > 120) {
+                currentWidth -= 40;
+            }
+            
+            img.dataset.width = currentWidth;
+            img.style.width = currentWidth + 'px';
+            img.style.height = currentWidth + 'px';
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             // --- 아코디언 로직 ---
             const accordionToggles = document.querySelectorAll('.accordion-toggle');
@@ -206,4 +295,3 @@
     </script>
 </body>
 </html>
-
