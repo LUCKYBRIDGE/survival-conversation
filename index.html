@@ -54,6 +54,55 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
+        /* QR 풀스크린 (확대) 모드 */
+        .qr-fullscreen-mode {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9999 !important;
+            background-color: rgba(0, 0, 0, 0.85) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            max-width: none !important;
+            border-radius: 0 !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .qr-fullscreen-img {
+            width: 80vmin !important;
+            height: 80vmin !important;
+            max-width: 800px !important;
+            max-height: 800px !important;
+            background-color: white !important;
+            padding: 2rem !important;
+            border-radius: 1.5rem !important;
+        }
+        .qr-fullscreen-mode .qr-buttons {
+            margin-top: 2rem !important;
+        }
+        .qr-fullscreen-mode .qr-buttons button {
+            background-color: white !important;
+            border: none !important;
+            padding: 1rem 2rem !important;
+            font-size: 1.25rem !important;
+            border-radius: 9999px !important;
+            color: #374151 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+        .qr-fullscreen-mode .btn-zoom-in {
+            display: none !important;
+        }
+        .qr-fullscreen-mode .btn-zoom-out {
+            display: flex !important;
+        }
+        .qr-fullscreen-mode .qr-label {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
@@ -100,19 +149,19 @@
                         
                         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-inner">
                             <!-- QR 코드 및 확대/축소 버튼 -->
-                            <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px]">
+                            <div class="qr-container flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px] transition-all duration-300">
                                 <div class="flex justify-center items-center">
-                                    <img id="qr-moon" src="./moon_qr.png" alt="달에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;" data-width="160">
+                                    <img id="qr-moon" src="./moon_qr.png" alt="달에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;">
                                 </div>
-                                <div class="flex space-x-2 mt-4">
-                                    <button onclick="zoomQr('qr-moon', 'in')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                <div class="flex space-x-2 mt-4 qr-buttons">
+                                    <button onclick="zoomQr('qr-moon', 'in')" class="btn-zoom-in flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
                                         <i class="fas fa-search-plus mr-1"></i> 확대
                                     </button>
-                                    <button onclick="zoomQr('qr-moon', 'out')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                    <button onclick="zoomQr('qr-moon', 'out')" class="btn-zoom-out hidden flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
                                         <i class="fas fa-search-minus mr-1"></i> 축소
                                     </button>
                                 </div>
-                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center"><i class="fas fa-qrcode mr-2 text-blue-500"></i>모바일 접속</span>
+                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center qr-label"><i class="fas fa-qrcode mr-2 text-blue-500"></i>모바일 접속</span>
                             </div>
                             <!-- 접속 버튼 영역 -->
                             <div class="flex flex-col space-y-4 w-full">
@@ -159,19 +208,19 @@
 
                         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-inner">
                             <!-- QR 코드 및 확대/축소 버튼 -->
-                            <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px]">
+                            <div class="qr-container flex flex-col items-center bg-white p-4 rounded-xl shadow-md border border-gray-200 min-w-[200px] transition-all duration-300">
                                 <div class="flex justify-center items-center">
-                                    <img id="qr-sea" src="./sea_qr.png" alt="바다에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;" data-width="160">
+                                    <img id="qr-sea" src="./sea_qr.png" alt="바다에서 살아남기 QR 코드" class="object-contain transition-all duration-300 ease-in-out" style="width: 160px; height: 160px;">
                                 </div>
-                                <div class="flex space-x-2 mt-4">
-                                    <button onclick="zoomQr('qr-sea', 'in')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                <div class="flex space-x-2 mt-4 qr-buttons">
+                                    <button onclick="zoomQr('qr-sea', 'in')" class="btn-zoom-in flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
                                         <i class="fas fa-search-plus mr-1"></i> 확대
                                     </button>
-                                    <button onclick="zoomQr('qr-sea', 'out')" class="flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
+                                    <button onclick="zoomQr('qr-sea', 'out')" class="btn-zoom-out hidden flex items-center justify-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-semibold shadow-sm border border-gray-200">
                                         <i class="fas fa-search-minus mr-1"></i> 축소
                                     </button>
                                 </div>
-                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center"><i class="fas fa-qrcode mr-2 text-green-500"></i>모바일 접속</span>
+                                <span class="text-sm font-bold text-gray-700 mt-3 flex items-center qr-label"><i class="fas fa-qrcode mr-2 text-green-500"></i>모바일 접속</span>
                             </div>
                             <!-- 접속 버튼 영역 -->
                             <div class="flex flex-col space-y-4 w-full">
@@ -226,19 +275,28 @@
         // --- QR 코드 확대/축소 로직 ---
         function zoomQr(imgId, action) {
             const img = document.getElementById(imgId);
-            let currentWidth = parseInt(img.dataset.width) || 160;
+            const container = img.closest('.qr-container');
             
-            // 확대 (최대 400px), 축소 (최소 120px)
-            if (action === 'in' && currentWidth < 400) {
-                currentWidth += 40;
-            } else if (action === 'out' && currentWidth > 120) {
-                currentWidth -= 40;
+            if (action === 'in') {
+                container.classList.add('qr-fullscreen-mode');
+                img.classList.add('qr-fullscreen-img');
+            } else if (action === 'out') {
+                container.classList.remove('qr-fullscreen-mode');
+                img.classList.remove('qr-fullscreen-img');
             }
-            
-            img.dataset.width = currentWidth;
-            img.style.width = currentWidth + 'px';
-            img.style.height = currentWidth + 'px';
         }
+        
+        // ESC 키 누를 때 전체화면 축소
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.qr-fullscreen-mode').forEach(el => {
+                    el.classList.remove('qr-fullscreen-mode');
+                });
+                document.querySelectorAll('.qr-fullscreen-img').forEach(el => {
+                    el.classList.remove('qr-fullscreen-img');
+                });
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             // --- 아코디언 로직 ---
